@@ -5,4 +5,7 @@ angular.module('academicCloudApp')
     $http.get('/api/awesomeThings').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
     });
+
+
+
   });
