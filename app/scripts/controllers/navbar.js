@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('academicCloudApp')
-  .controller('NavbarCtrl', function ($scope, $location, $FB, User) {
+  .controller('NavbarCtrl', function ($scope,$rootScope, $location, $FB, User) {
         updateLoginStatus(updateApiMe);
 
         $scope.login = function () {
@@ -32,12 +32,14 @@ angular.module('academicCloudApp')
                     User.isLoggedIn = false;
                 }
                 (more || angular.noop)();
+
             });
         }
 
         function updateApiMe () {
             $FB.api('/me', function (res) {
                 User.profile = res;
+                $rootScope.$broadcast("loginStatusChanged");
             });
         }
   });
