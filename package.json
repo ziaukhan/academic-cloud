@@ -7,7 +7,8 @@
     "async": "~0.2.9",
     "ejs": "~0.8.4",
     "passport": "~0.1.17",
-    "passport-facebook": "~1.0.2"
+    "passport-facebook": "~1.0.2",
+    "mongoose-schema-extend": "~0.1.7"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

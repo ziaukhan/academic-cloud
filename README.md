@@ -9,3 +9,8 @@ https://github.com/pc035860/angular-easyfb
 
 To run the code:
 grunt serve
+
+
+For Node.js/Server Tests we are using:
+https://github.com/mhevery/jasmine-node
+http://blog.codeship.io/2013/08/20/testing-tuesday-19-how-to-test-node-js-applications-with-jasmine.html
