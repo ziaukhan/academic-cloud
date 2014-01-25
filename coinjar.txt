@@ -1,0 +1,213 @@
+http://smashits.saavn.com/audio/player.cfm?vt1xD5gO1JVEAoAB0HS3Xk357dT/bo3y
+public class USCoinJar
+{
+    const double VOLUME = 32.000; //All units are Fl.Oz (Fluid Ounce)
+    double FilledVolume = 0.0;
+    double FilledAmount = 0.0;
+    int CoinCount = 0;
+ 
+    public void Reset(bool bResetCoinage = true)
+    {
+        FilledVolume = 0.0;
+        if (bResetCoinage)
+        {
+            CoinCount = 0;
+            FilledAmount = 0.0;
+        }
+    }
+ 
+    public double AddCoin(ICoin coin) //See ICoin definition below.
+    {
+        if ((FilledVolume + coin.GetVolumeFlOz()) > VOLUME)
+            throw new Exception("Jar is filled!");
+        FilledVolume += coin.GetVolumeFlOz();
+        FilledAmount += coin.Worth;
+        CoinCount++;
+        return FilledVolume;
+    }
+ 
+    public double GetAmount()
+    {
+        return Math.Round(FilledAmount,4);
+    }
+ 
+    public double GetVolume()
+    {
+        return Math.Round(FilledVolume,4);
+    }
+ 
+}
+ 
+//Coin Specifications: http://www.usmint.gov/about_the_mint/?action=coin_specifications
+public interface ICoin
+{
+    //in mm
+    double Diameter
+    {
+        get;
+    }
+    //in mm
+    double Thickness
+    {
+        get;
+    }
+ 
+    //in mm
+    double GetVolume();
+    //in Fl.Oz
+    double GetVolumeFlOz();
+ 
+    //in Dollar $
+    double Worth
+    {
+        get;
+    }
+}
+ 
+namespace USCoinage
+{
+    public abstract class ACent : ICoin
+    {
+        public abstract double Diameter { get; }
+        public abstract double Thickness{ get; }
+        public abstract double Worth { get; }
+ 
+        //in mm [Area(PI*R*R)*Thickness]
+        public double GetVolume()
+        {
+            return (Math.PI * (Diameter / 2) * (Diameter / 2)) * Thickness;
+        }
+ 
+        //in Fl.Oz (Fluid Ounce) - 1 cm = 0.000034 fl oz
+        public double GetVolumeFlOz()
+        {
+            return Math.Round((GetVolume() * 0.000034),3);
+        }
+    }
+ 
+    public class Cent : ACent
+    {
+        public override double Diameter
+        {
+            get { return 19.05; }
+        }
+ 
+        public override double Thickness
+        {
+            get { return 1.55; }
+        }
+ 
+        public override double Worth
+        {
+            get { return 0.01; }
+        }
+    }
+ 
+    public class Nickel : ACent
+    {
+        public override double Diameter
+        {
+            get { return 21.21; }
+        }
+ 
+        public override double Thickness
+        {
+            get { return 1.95; }
+        }
+ 
+        public override double Worth
+        {
+            get { return 0.05; }
+        }
+    }
+ 
+    public class Dime : ACent
+    {
+        public override double Diameter
+        {
+            get { return 17.91; }
+        }
+ 
+        public override double Thickness
+        {
+            get { return 1.35; }
+        }
+ 
+        public override double Worth
+        {
+            get { return 0.1; }
+        }
+    }
+ 
+    public class QuarterDollar : ACent
+    {
+        public override double Diameter
+        {
+            get { return 24.26; }
+        }
+ 
+        public override double Thickness
+        {
+            get { return 1.75; }
+        }
+ 
+        public override double Worth
+        {
+            get { return 0.25; }
+        }
+    }
+ 
+    public class HalfDollar : ACent
+    {
+        public override double Diameter
+        {
+            get { return 30.61; }
+        }
+ 
+        public override double Thickness
+        {
+            get { return 2.15; }
+        }
+ 
+        public override double Worth
+        {
+            get { return 0.5; }
+        }
+    }
+ 
+    public class Presidential : ACent
+    {
+        public override double Diameter
+        {
+            get { return 26.49; }
+        }
+ 
+        public override double Thickness
+        {
+            get { return 2.00; }
+        }
+ 
+        public override double Worth
+        {
+            get { return 1.0; }
+        }
+    }
+ 
+    public class NativeAmerican : ACent
+    {
+        public override double Diameter
+        {
+            get { return 26.49; }
+        }
+ 
+        public override double Thickness
+        {
+            get { return 2.00; }
+        }
+ 
+        public override double Worth
+        {
+            get { return 1.0; }
+        }
+    }
+}
